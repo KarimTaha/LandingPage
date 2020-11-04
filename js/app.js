@@ -45,7 +45,7 @@ const navbarSections = [{
 */
 
 // build the nav
-document.addEventListener('DOMContentLoaded', function () {
+function buildNavbar() {
     const navbarList = document.querySelector('#navbar__list');
     const fragment = document.createDocumentFragment();
     let currentSectionLi;
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fragment.appendChild(currentSectionLi);
     }
     navbarList.appendChild(fragment);
-});
+}
 
 // Add class 'active' to section when near top of viewport
 
@@ -73,7 +73,9 @@ document.addEventListener('DOMContentLoaded', function () {
 */
 
 // Build menu 
-
+document.addEventListener('DOMContentLoaded', function () {
+    buildNavbar();
+});
 // Scroll to section on link click
 
 // Set sections as active
