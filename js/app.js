@@ -17,7 +17,18 @@
  * Define Global Variables
  * 
 */
-
+const navbarSections = [{
+        "name": "Section One",
+        "id": "section_one"
+    },
+    {
+        "name": "Section Two",
+        "id": "section_two"
+    },
+    {
+        "name": "Section Three",
+        "id": "section_three"
+    }];
 
 /**
  * End Global Variables
@@ -34,7 +45,20 @@
 */
 
 // build the nav
+document.addEventListener('DOMContentLoaded', function () {
+    const navbarList = document.querySelector('#navbar__list');
+    const fragment = document.createDocumentFragment();
+    let currentSectionLi;
 
+    for (const section of navbarSections) {
+        currentSectionLi = document.createElement('li');
+        currentSectionLi.id = section.id;
+        currentSectionLi.textContent = section.name;
+        currentSectionLi.className = "menu__link";
+        fragment.appendChild(currentSectionLi);
+    }
+    navbarList.appendChild(fragment);
+});
 
 // Add class 'active' to section when near top of viewport
 
