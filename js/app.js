@@ -40,7 +40,21 @@ const navbar = document.querySelector('nav');
  * Start Helper Functions
  * 
 */
+function getClosestElement(yPosition) {
+    let resultSectionId;
+    let minDistance = -1;
+    for (const section of navbarSections) {
+        let currentSection = document.querySelector(`#${section.targetId}`);
+        let distance = currentSection.getBoundingClientRect().top;
+        let absDistance = Math.abs(distance);
 
+        if (minDistance == -1 || absDistance < minDistance) {
+            resultSectionId = section.targetId;
+            minDistance = absDistance;
+        }
+    }
+    return resultSectionId;
+}
 
 
 /**
@@ -66,7 +80,21 @@ function buildNavbar() {
 }
 
 // Add class 'active' to section when near top of viewport
-// function addActiveClass()
+function addActiveClass(activeSectionId) {
+    for (const section of navbarSections) {
+        let currentSection = document.querySelector(`#${section.targetId}`);
+        if (section.targetId == activeSectionId) {
+            if (!currentSection.classList.contains("your-active-class")){
+                currentSection.classList.add('your-active-class');
+            }
+        }
+        else {
+            if (currentSection.classList.contains("your-active-class")){
+                currentSection.classList.remove('your-active-class');
+            }
+        }
+    }
+}
 
 // Scroll to anchor ID using scrollTO event
 function scrollToSection(sectionId) {
@@ -86,12 +114,15 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 // Scroll to section on link click
 navbar.addEventListener('click', function (event) {
-    console.log(event);
     if (event.target.nodeName === 'A'){
         event.preventDefault();
         scrollToSection(event.target.getAttribute("href"));
     }
 })
 // Set sections as active
-
+document.addEventListener('scroll', function () {
+    const yPosition = window.scrollY;
+    const activeSection = getClosestElement(yPosition);
+    addActiveClass(activeSection);
+});
 
